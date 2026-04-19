@@ -9,26 +9,55 @@ import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
+import base64
 import os, sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(__file__)), "src"))
-from utils import load_config, pickle_load
+from utils import load_config, pickle_load, resolve_path
 
-st.set_page_config(page_title="Model Performance | FailSafe AI", page_icon="🤖", layout="wide")
+st.set_page_config(page_title="Model Performance | FailSafe AI", page_icon="🛡️", layout="wide")
 
-st.markdown("""
+# Load CNC image as base64 for CSS background
+@st.cache_data(show_spinner=False)
+def get_bg_image():
+    img_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "cnc_machine.png")
+    if not os.path.exists(img_path):
+        return None
+    with open(img_path, "rb") as f:
+        data = base64.b64encode(f.read()).decode()
+    return data
+
+bg_b64 = get_bg_image()
+
+# Premium Enterprise CSS
+st.markdown(f"""
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-  html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-  .stApp { background: linear-gradient(135deg, #0a0a0a 0%, #171717 50%, #1f1f1f 100%); }
-  [data-testid="stSidebar"] { background: linear-gradient(180deg, #000000 0%, #0f0f0f 100%); border-right: 1px solid #2a2a2a; }
-  #MainMenu {visibility: hidden;} footer {visibility: hidden;}
-  .winner-badge { display: inline-block; background: rgba(255,75,75,0.15); border: 1px solid rgba(255,75,75,0.4);
-    border-radius: 20px; padding: 0.3rem 0.8rem; font-size: 0.82rem; color: #ff4b4b; font-weight: 600; }
+  html, body, [class*="css"] {{ font-family: 'Inter', sans-serif; }}
+  .stApp {{ background: linear-gradient(135deg, #0a0a0a 0%, #171717 50%, #1f1f1f 100%); }}
+  [data-testid="stSidebar"] {{ background: linear-gradient(180deg, #000000 0%, #0f0f0f 100%); border-right: 1px solid #2a2a2a; }}
+  #MainMenu {{visibility: hidden;}} footer {{visibility: hidden;}}
+
+  [data-testid="stMain"]::before {{
+    content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/png;base64,{bg_b64}") center center / cover no-repeat;
+    filter: blur(1.5px) brightness(0.35); opacity: 0.55; z-index: 0; pointer-events: none;
+  }}
+
+  [data-testid="stMain"] > div {{ position: relative; z-index: 1; }}
+
+  .enterprise-header {{ display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 0.8rem; }}
+  .enterprise-header .title {{ font-size: 1.8rem !important; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; }}
+  .enterprise-header .subtitle {{ font-size: 1rem !important; color: #e0e0e0; }}
+  .enterprise-header .icon {{ width: 40px; height: 40px; background: linear-gradient(135deg, #ff4b4b, #b71c1c); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }}
+
+  .section-label {{ font-size: 0.8rem !important; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; padding-bottom: 0.2rem; border-bottom: 2px solid #ff4b4b; display: inline-block; }}
+
+  .metric-mini-card {{ background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 0.8rem; text-align: center; }}
+  
+  .block-container {{ padding-top: 1.2rem !important; padding-bottom: 0.5rem !important; }}
 </style>
 """, unsafe_allow_html=True)
-
-COLORS_3 = {"Decision Tree": "#e0e0e0", "Random Forest": "#b71c1c", "XGBoost": "#ff4b4b"}
 
 @st.cache_resource(show_spinner=False)
 def load_metrics():
@@ -39,182 +68,93 @@ def load_metrics():
 
 metrics, ft_metrics, config = load_metrics()
 best_name = metrics["best_model_name"]
-feature_names = metrics["feature_names"]
 model_names = ["Decision Tree", "Random Forest", "XGBoost"]
+COLORS_3 = {"Decision Tree": "#e0e0e0", "Random Forest": "#b71c1c", "XGBoost": "#ff4b4b"}
 
-# Header
+# Enterprise Header
 st.markdown(f"""
-<h1 style='background: linear-gradient(135deg, #e0e0e0, #ff4b4b); -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; font-size: 2rem;'>
-  🤖 Model Performance Comparison
-</h1>
-<p style='color: #8b949e; font-size: 0.9rem;'>
-  Comparing 3 classifiers -- Best model: <span class='winner-badge'>🏆 {best_name}</span>
-</p>
-""", unsafe_allow_html=True)
-
-st.markdown("<br>", unsafe_allow_html=True)
-
-# -- Metrics comparison cards --
-cols = st.columns(3)
-for i, name in enumerate(model_names):
-    m = metrics[name]
-    is_best = (name == best_name)
-    border_color = "rgba(255,75,75,0.6)" if is_best else "rgba(255,255,255,0.08)"
-    badge = " 🏆" if is_best else ""
-
-    with cols[i]:
-        st.markdown(f"""
-        <div style='background: rgba(255,255,255,0.04); border: 2px solid {border_color};
-                    border-radius: 12px; padding: 1.2rem; text-align: center;'>
-          <div style='font-size: 1rem; font-weight: 600; color: {COLORS_3[name]};'>{name}{badge}</div>
-          <div style='display: flex; justify-content: space-around; margin-top: 1rem;'>
-            <div>
-              <div style='font-size: 1.5rem; font-weight: 700; color: #e6edf3;'>{m["accuracy"]:.1%}</div>
-              <div style='font-size: 0.7rem; color: #8b949e; text-transform: uppercase;'>Accuracy</div>
-            </div>
-            <div>
-              <div style='font-size: 1.5rem; font-weight: 700; color: #e6edf3;'>{m["f1_score"]:.3f}</div>
-              <div style='font-size: 0.7rem; color: #8b949e; text-transform: uppercase;'>F1 Score</div>
-            </div>
-            <div>
-              <div style='font-size: 1.5rem; font-weight: 700; color: #e6edf3;'>{m["auc_roc"]:.3f}</div>
-              <div style='font-size: 0.7rem; color: #8b949e; text-transform: uppercase;'>AUC-ROC</div>
-            </div>
-          </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-st.markdown("<br>", unsafe_allow_html=True)
-
-# -- ROC Curves --
-st.markdown("### ROC Curves")
-fig_roc = go.Figure()
-
-for name in model_names:
-    m = metrics[name]
-    fig_roc.add_trace(go.Scatter(
-        x=m["fpr"], y=m["tpr"],
-        mode="lines", name=f"{name} (AUC={m['auc_roc']:.3f})",
-        line=dict(color=COLORS_3[name], width=2.5),
-    ))
-
-fig_roc.add_trace(go.Scatter(
-    x=[0, 1], y=[0, 1], mode="lines", name="Random Baseline",
-    line=dict(color="#484f58", width=1, dash="dash"),
-))
-
-fig_roc.update_layout(
-    template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-    height=420, font=dict(family="Inter"),
-    xaxis_title="False Positive Rate", yaxis_title="True Positive Rate",
-    legend=dict(x=0.55, y=0.05, bgcolor="rgba(0,0,0,0.5)", bordercolor="rgba(255,255,255,0.1)"),
-)
-st.plotly_chart(fig_roc, use_container_width=True)
-
-# -- Confusion Matrices --
-st.markdown("---")
-st.markdown("### Confusion Matrices")
-
-cm_cols = st.columns(3)
-labels = ["Normal", "Failure"]
-
-for i, name in enumerate(model_names):
-    cm = metrics[name]["confusion_matrix"]
-    with cm_cols[i]:
-        fig_cm = go.Figure(data=go.Heatmap(
-            z=cm, x=labels, y=labels,
-            colorscale=[[0, "#0d1117"], [1, COLORS_3[name]]],
-            text=cm, texttemplate="%{text}",
-            textfont={"size": 18, "color": "#e6edf3"},
-            showscale=False,
-        ))
-        fig_cm.update_layout(
-            title=dict(text=name, font=dict(size=14, color=COLORS_3[name])),
-            template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-            height=300, font=dict(family="Inter"),
-            xaxis_title="Predicted", yaxis_title="Actual",
-            margin=dict(t=40, b=60),
-        )
-        st.plotly_chart(fig_cm, use_container_width=True)
-
-# -- Feature Importance --
-st.markdown("---")
-st.markdown("### Feature Importance Comparison")
-
-display_names_map = config["dataset"]["display_names"]
-display_labels = [display_names_map.get(f, f) for f in feature_names]
-
-fig_fi = make_subplots(rows=1, cols=3, subplot_titles=model_names, shared_yaxes=True)
-
-for i, name in enumerate(model_names):
-    importance = metrics[name]["feature_importance"]
-    sorted_idx = np.argsort(importance)
-
-    fig_fi.add_trace(go.Bar(
-        x=importance[sorted_idx],
-        y=[display_labels[j] for j in sorted_idx],
-        orientation="h",
-        marker_color=COLORS_3[name],
-        name=name,
-        showlegend=False,
-    ), row=1, col=i+1)
-
-fig_fi.update_layout(
-    template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-    height=450, font=dict(family="Inter", size=10),
-    margin=dict(t=40, b=30, l=140),
-)
-st.plotly_chart(fig_fi, use_container_width=True)
-
-# -- Detailed Classification Reports --
-st.markdown("---")
-st.markdown("### Detailed Classification Reports")
-
-tabs = st.tabs(model_names)
-for i, name in enumerate(model_names):
-    with tabs[i]:
-        report = metrics[name]["report"]
-        report_df = pd.DataFrame(report).transpose()
-        report_df = report_df.round(3)
-        st.dataframe(report_df, use_container_width=True)
-
-# -- Failure Type Model --
-st.markdown("---")
-st.markdown("### Failure Type Classifier (Multi-class)")
-
-ft_col1, ft_col2 = st.columns(2)
-
-with ft_col1:
-    st.metric("Accuracy", f"{ft_metrics['accuracy']:.1%}")
-    ft_report = pd.DataFrame(ft_metrics["report"]).transpose().round(3)
-    st.dataframe(ft_report, use_container_width=True)
-
-with ft_col2:
-    ft_cm = ft_metrics["confusion_matrix"]
-    ft_classes = ft_metrics["classes"]
-    short_classes = [c.replace(" Failure", "").replace("Heat Dissipation", "Heat").replace("Random Failures", "Random") for c in ft_classes]
-
-    fig_ft_cm = go.Figure(data=go.Heatmap(
-        z=ft_cm, x=short_classes, y=short_classes,
-        colorscale=[[0, "#0d1117"], [1, "#757575"]],
-        text=ft_cm, texttemplate="%{text}",
-        textfont={"size": 12, "color": "#e6edf3"},
-        showscale=False,
-    ))
-    fig_ft_cm.update_layout(
-        title="Failure Type Confusion Matrix",
-        template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        height=400, font=dict(family="Inter", size=10),
-        xaxis_title="Predicted", yaxis_title="Actual",
-        margin=dict(t=40, b=80, l=80),
-    )
-    st.plotly_chart(fig_ft_cm, use_container_width=True)
-
-# Footer
-st.divider()
-st.markdown("""
-<div style='text-align: center; color: #484f58; font-size: 0.78rem;'>
-  FailSafe AI &nbsp;|&nbsp; Built by Dhrubo
+<div class='enterprise-header'>
+  <div class='icon'>🛡️</div>
+  <div>
+    <div class='title'>Algorithmic Benchmarks</div>
+    <div class='subtitle'>Comparative analysis across model architectures &mdash; Current Production: {best_name}</div>
+  </div>
 </div>
 """, unsafe_allow_html=True)
+
+# Tabs for compactness
+tab_metrics, tab_binary, tab_multiclass = st.tabs(["📊 Performance Metrics", "🔬 Binary Diagnostics", "🏷️ Failure Type Detail"])
+
+with tab_metrics:
+    st.markdown("<div class='section-label'>Summary Statistics</div>", unsafe_allow_html=True)
+    m_cols = st.columns(3)
+    for i, name in enumerate(model_names):
+        m = metrics[name]
+        is_best = (name == best_name)
+        border = "#ff4b4b" if is_best else "rgba(255,255,255,0.1)"
+        with m_cols[i]:
+            st.markdown(f"""
+            <div style='background:rgba(255,255,255,0.05); border:2px solid {border}; border-radius:12px; padding:1rem; text-align:center;'>
+                <div style='font-size:0.9rem; font-weight:700; color:{COLORS_3[name]};'>{name.upper()} {"🏆" if is_best else ""}</div>
+                <div style='display:flex; justify-content:space-around; margin-top:0.8rem;'>
+                    <div><div style='font-size:1.4rem; font-weight:800;'>{m["accuracy"]:.1%}</div><div style='font-size:0.6rem; color:#8b949e;'>ACCURACY</div></div>
+                    <div><div style='font-size:1.4rem; font-weight:800;'>{m["f1_score"]:.3f}</div><div style='font-size:0.6rem; color:#8b949e;'>F1 SCORE</div></div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height:1rem;'></div>", unsafe_allow_html=True)
+    
+    col_roc, col_fi = st.columns([1, 1.2])
+    with col_roc:
+        st.markdown("<div class='section-label'>ROC Curves</div>", unsafe_allow_html=True)
+        fig_roc = go.Figure()
+        for name in model_names:
+            m = metrics[name]
+            fig_roc.add_trace(go.Scatter(x=m["fpr"], y=m["tpr"], mode="lines", name=f"{name}", line=dict(color=COLORS_3[name], width=2)))
+        fig_roc.add_trace(go.Scatter(x=[0, 1], y=[0, 1], mode="lines", showlegend=False, line=dict(color="#484f58", width=1, dash="dash")))
+        fig_roc.update_layout(template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=320, margin=dict(t=10, b=10, l=10, r=10), legend=dict(x=0.6, y=0.08, font=dict(size=9)))
+        st.plotly_chart(fig_roc, use_container_width=True)
+
+    with col_fi:
+        st.markdown("<div class='section-label'>Feature Importance</div>", unsafe_allow_html=True)
+        display_names_map = config["dataset"]["display_names"]
+        feature_names = metrics["feature_names"]
+        display_labels = [display_names_map.get(f, f) for f in feature_names]
+        
+        fig_fi = go.Figure()
+        for name in model_names:
+            importance = metrics[name]["feature_importance"]
+            fig_fi.add_trace(go.Bar(x=display_labels, y=importance, name=name, marker_color=COLORS_3[name]))
+        
+        fig_fi.update_layout(template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=320, barmode='group', margin=dict(t=10, b=10, l=10, r=10), legend=dict(orientation="h", y=1.2, font=dict(size=9)))
+        st.plotly_chart(fig_fi, use_container_width=True)
+
+with tab_binary:
+    st.markdown("<div class='section-label'>Binary Confusion Matrices</div>", unsafe_allow_html=True)
+    cm_cols = st.columns(3)
+    labels = ["Normal", "Failure"]
+    for i, name in enumerate(model_names):
+        cm = metrics[name]["confusion_matrix"]
+        with cm_cols[i]:
+            fig_cm = go.Figure(data=go.Heatmap(z=cm, x=labels, y=labels, colorscale=[[0, "#0d1117"], [1, COLORS_3[name]]], text=cm, texttemplate="%{text}", textfont={"size": 14}, showscale=False))
+            fig_cm.update_layout(title=dict(text=name, font=dict(size=12)), template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=220, margin=dict(t=30, b=30, l=30, r=30))
+            st.plotly_chart(fig_cm, use_container_width=True)
+    
+    st.markdown("<div class='section-label'>Classification Reports</div>", unsafe_allow_html=True)
+    tab_reports = st.tabs(model_names)
+    for i, name in enumerate(model_names):
+        with tab_reports[i]:
+            st.dataframe(pd.DataFrame(metrics[name]["report"]).transpose().round(3), use_container_width=True)
+
+with tab_multiclass:
+    st.markdown("<div class='section-label'>Failure Type Classifier</div>", unsafe_allow_html=True)
+    col1, col2 = st.columns([1, 1.2])
+    with col1:
+        st.metric("Aggregate Accuracy", f"{ft_metrics['accuracy']:.1%}")
+        st.dataframe(pd.DataFrame(ft_metrics["report"]).transpose().round(3), use_container_width=True)
+    with col2:
+        ft_classes = [c.replace(" Failure", "").replace("Heat Dissipation", "Heat").replace("Random Failures", "Random") for c in ft_metrics["classes"]]
+        fig_ft_cm = go.Figure(data=go.Heatmap(z=ft_metrics["confusion_matrix"], x=ft_classes, y=ft_classes, colorscale="Greys", text=ft_metrics["confusion_matrix"], texttemplate="%{text}", showscale=False))
+        fig_ft_cm.update_layout(template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=350, margin=dict(t=10, b=40, l=40, r=10))
+        st.plotly_chart(fig_ft_cm, use_container_width=True)

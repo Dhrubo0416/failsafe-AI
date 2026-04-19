@@ -56,17 +56,18 @@ st.markdown("""
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-size: 2.6rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
+    font-size: 3.2rem; /* Increased from 2.6 */
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
   }
 
   .subtitle {
-    color: #8b949e;
-    font-size: 0.95rem;
-    margin-top: 0.25rem;
+    color: #e0e0e0; /* Brighter for readability */
+    font-size: 1.15rem; /* Increased from 0.95 */
+    margin-top: 0.4rem;
     font-weight: 400;
+    line-height: 1.4;
   }
 
   .metric-card {
