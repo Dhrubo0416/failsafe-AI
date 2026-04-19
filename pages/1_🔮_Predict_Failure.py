@@ -54,6 +54,10 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+# Machine Image
+st.image("assets/cnc_machine.png", use_container_width=True)
+st.markdown("<br>", unsafe_allow_html=True)
+
 # Input form
 col_input, col_result = st.columns([1, 1], gap="large")
 
