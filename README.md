@@ -90,12 +90,16 @@ The project uses the **AI4I 2020 Predictive Maintenance Dataset** from the UCI M
    streamlit run app.py
    ```
 
----
+## 📐 Predictive Architecture
 
-## 🔮 Future Roadmap
-- Integration with live IoT sensor streaming.
-- Deep Learning (LSTM) approaches for multi-step time-series forecasting.
-- Alerting mechanisms (Email/SMS) using AWS SNS or Twilio.
+```mermaid
+graph TD
+    A[Sensor Data: Torque, Speed, Temp] --> B[Feature Engineering]
+    B -->|Calculate Power, Temp Diff| C[SMOTE Class Balancing]
+    C --> D[XGBoost Core Model]
+    D --> |Prob > 75%| E((CRITICAL RISK))
+    D --> |Prob < 75%| F((MACHINE NORMAL))
+```
 
 ---
 

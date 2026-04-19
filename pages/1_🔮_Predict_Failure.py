@@ -43,19 +43,24 @@ best_model, ft_model, ft_metrics, config = load_models()
 display_names = config["dataset"]["display_names"]
 
 # Header
-st.markdown("""
-<div style='padding: 1rem 0;'>
-  <h1 style='background: linear-gradient(135deg, #e0e0e0, #ff4b4b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2rem;'>
-    ⚙️ Predict Equipment Failure
-  </h1>
-  <p style='color: #8b949e; font-size: 0.9rem;'>
-    Enter CNC milling machine sensor readings below to predict failure probability and type
-  </p>
-</div>
-""", unsafe_allow_html=True)
+h1, h2 = st.columns([2, 1])
 
-# Machine Image
-st.image("assets/cnc_machine.png", use_container_width=True)
+with h1:
+    st.markdown("""
+    <div style='padding: 1rem 0;'>
+      <h1 style='background: linear-gradient(135deg, #e0e0e0, #ff4b4b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2rem;'>
+        ⚙️ Predict Equipment Failure
+      </h1>
+      <p style='color: #8b949e; font-size: 0.9rem;'>
+        Enter CNC milling machine sensor readings below to predict failure probability and type
+      </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with h2:
+    st.markdown("<div style='padding-top: 1rem;'></div>", unsafe_allow_html=True)
+    st.image("assets/cnc_machine.png", use_container_width=True)
+
 st.markdown("<br>", unsafe_allow_html=True)
 
 # Input form
