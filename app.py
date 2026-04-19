@@ -22,7 +22,7 @@ from utils import load_config, pickle_load, resolve_path
 # ================================================================
 st.set_page_config(
     page_title="FailSafe AI | Predictive Maintenance",
-    page_icon="🔧",
+    page_icon="🛡️",
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
@@ -228,7 +228,7 @@ except Exception as e:
 with st.sidebar:
     st.markdown("""
     <div style='text-align: center; padding: 1rem 0;'>
-      <div style='font-size: 2.5rem;'>⚙️</div>
+      <div style='font-size: 2.5rem;'>🛡️</div>
       <div style='font-size: 1.1rem; font-weight: 700; color: #ff4b4b;'>FailSafe AI</div>
       <div style='font-size: 0.75rem; color: #a0a0a0; margin-top: 0.25rem;'>Predictive Maintenance Platform</div>
     </div>
@@ -356,7 +356,7 @@ with col_a:
 with col_b:
     st.markdown("""
     <div class='info-card'>
-      <h4 style='color:#e0e0e0; margin-top:0;'>⚙️ The Solution</h4>
+      <h4 style='color:#e0e0e0; margin-top:0;'>🛡️ The Solution</h4>
       <p style='color:#8b949e; font-size:0.88rem; line-height:1.6;'>
         FailSafe AI uses <b style='color:#e0e0e0;'>real-time sensor data</b> --
         temperature, speed, torque, tool wear -- to predict failures
@@ -381,7 +381,7 @@ col_p1, col_p2, col_p3 = st.columns(3)
 with col_p1:
     st.markdown("""
     <div class='info-card' style='text-align:center; min-height: 140px;'>
-      <div style='font-size:1.8rem; margin-bottom:0.5rem;'>⚙️</div>
+      <div style='font-size:1.8rem; margin-bottom:0.5rem;'>🛡️</div>
       <div style='color:#e6edf3; font-weight:600; font-size:0.9rem;'>Predict Failure</div>
       <div style='color:#8b949e; font-size:0.78rem; margin-top:0.3rem;'>Enter sensor data and get instant failure predictions with risk levels</div>
     </div>
