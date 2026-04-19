@@ -1,0 +1,117 @@
+# ══════════════════════════════════════════════════════════════
+# FailSafe AI — Configuration
+# ══════════════════════════════════════════════════════════════
+
+# Dataset paths
+dataset:
+  data_directory: data/raw/
+  file_name: predictive_maintenance.csv
+  drop_columns: ['UDI', 'Product ID']
+  label: Target
+  failure_type_label: Failure Type
+  # Original CSV column names (before renaming)
+  original_predictors: ['Type', 'Air temperature [K]', 'Process temperature [K]',
+               'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
+  # Clean column names (XGBoost-safe — no brackets)
+  column_rename:
+    'Air temperature [K]': 'Air_Temp_K'
+    'Process temperature [K]': 'Process_Temp_K'
+    'Rotational speed [rpm]': 'Rotational_Speed_rpm'
+    'Torque [Nm]': 'Torque_Nm'
+    'Tool wear [min]': 'Tool_Wear_min'
+    'Failure Type': 'Failure_Type'
+  # Display-friendly names for the UI
+  display_names:
+    'Type': 'Machine Type'
+    'Air_Temp_K': 'Air Temperature (K)'
+    'Process_Temp_K': 'Process Temperature (K)'
+    'Rotational_Speed_rpm': 'Rotational Speed (rpm)'
+    'Torque_Nm': 'Torque (Nm)'
+    'Tool_Wear_min': 'Tool Wear (min)'
+    'Power_W': 'Power (W)'
+    'Temp_Diff_K': 'Temperature Difference (K)'
+    'Overstrain_Indicator': 'Overstrain Indicator'
+  predictors: ['Type', 'Air_Temp_K', 'Process_Temp_K',
+               'Rotational_Speed_rpm', 'Torque_Nm', 'Tool_Wear_min']
+  engineered_features: ['Power_W', 'Temp_Diff_K', 'Overstrain_Indicator']
+  all_features: ['Type', 'Air_Temp_K', 'Process_Temp_K',
+                 'Rotational_Speed_rpm', 'Torque_Nm', 'Tool_Wear_min',
+                 'Power_W', 'Temp_Diff_K', 'Overstrain_Indicator']
+  float_columns: ['Air_Temp_K', 'Process_Temp_K', 'Torque_Nm']
+  int_columns: ['Rotational_Speed_rpm', 'Tool_Wear_min']
+  category_columns: ['Type']
+  type_encoding: {'L': 1, 'M': 2, 'H': 3}
+  test_size: 0.2
+  random_state: 42
+
+# Processed data paths
+train_test:
+  directory: data/processed/
+  X_train: X_train.pkl
+  y_train: y_train.pkl
+  X_test: X_test.pkl
+  y_test: y_test.pkl
+  X_train_ft: X_train_ft.pkl
+  y_train_ft: y_train_ft.pkl
+  X_test_ft: X_test_ft.pkl
+  y_test_ft: y_test_ft.pkl
+
+# Data validation ranges
+data_defense:
+  type:
+    value: ['L', 'M', 'H']
+  range_air_temperature:
+    min_value: 295.3
+    max_value: 304.5
+  range_process_temperature:
+    min_value: 305.7
+    max_value: 313.8
+  range_rotational_speed:
+    min_value: 1168
+    max_value: 2886
+  range_torque:
+    min_value: 3.8
+    max_value: 76.6
+  range_tool_wear:
+    min_value: 0
+    max_value: 253
+  target:
+    value: [0, 1]
+
+# Model configurations
+models:
+  directory: models/
+  decision_tree:
+    name: decision_tree.pkl
+    params:
+      max_depth: 5
+      random_state: 42
+  random_forest:
+    name: random_forest.pkl
+    params:
+      n_estimators: 200
+      max_depth: 10
+      random_state: 42
+      class_weight: balanced
+      n_jobs: -1
+  xgboost:
+    name: xgboost.pkl
+    params:
+      n_estimators: 200
+      max_depth: 6
+      learning_rate: 0.1
+      random_state: 42
+      eval_metric: logloss
+  best_model: best_model.pkl
+  failure_type_model: failure_type_model.pkl
+  metrics: model_metrics.pkl
+  failure_type_metrics: failure_type_metrics.pkl
+
+# Failure type mapping
+failure_types:
+  - No Failure
+  - Heat Dissipation Failure
+  - Overstrain Failure
+  - Power Failure
+  - Random Failures
+  - Tool Wear Failure
