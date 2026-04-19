@@ -61,12 +61,13 @@ st.markdown(f"""
 
   /* COMPACT FONT INCREASES */
   .enterprise-header .title {{
-    font-size: 2.2rem !important; /* Increased significantly */
+    font-size: 2.2rem !important; 
     font-weight: 800;
     color: #ffffff;
     letter-spacing: -0.5px;
-    line-height: 1.3;
-    padding-bottom: 0.2rem;
+    line-height: 1.4;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }}
   .enterprise-header .subtitle {{
     font-size: 1.15rem !important; /* Increased */
@@ -74,15 +75,15 @@ st.markdown(f"""
     margin-top: 0.2rem;
   }}
 
-  /* ULTRA-COMPACT UI ELEMENTS */
+  /* RELAXED UI ELEMENTS */
   [data-testid="stSlider"] {{
-    margin-bottom: -10px !important; /* Better vertical flow */
+    margin-bottom: 0px !important; /* Natural vertical flow */
   }}
   [data-testid="stSlider"] label {{
-    font-size: 1.15rem !important; /* Increased font */
+    font-size: 1.15rem !important;
     font-weight: 600 !important;
     color: #ffffff !important;
-    margin-bottom: 2px !important;
+    margin-bottom: 0.2rem !important;
   }}
 
   .stSelectbox label {{
@@ -122,8 +123,8 @@ st.markdown(f"""
   }}
 
   .block-container {{
-    padding-top: 1.2rem !important;
-    padding-bottom: 0.5rem !important;
+    padding-top: 2rem !important; /* Give header room to breathe */
+    padding-bottom: 2rem !important;
   }}
 
   /* HIDE EXTRA SPACING */
