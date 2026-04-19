@@ -29,7 +29,6 @@ Unplanned equipment failures cost the manufacturing industry an estimated **$50 
   - 💪 Overstrain Failure (OSF)
   - 🔧 Tool Wear Failure (TWF)
   - 🎲 Random Failures (RNF)
-- **Interactive Analytics Dashboard:** Explore sensor distributions, correlations, and historical failure patterns.
 - **What-If Analysis Simulator:** Real-time parameter tweaking to visualize the impact on failure probability and identify safety margins.
 
 ---

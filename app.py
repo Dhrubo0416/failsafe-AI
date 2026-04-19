@@ -376,12 +376,12 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-col_p1, col_p2, col_p3, col_p4 = st.columns(4)
+col_p1, col_p2, col_p3 = st.columns(3)
 
 with col_p1:
     st.markdown("""
     <div class='info-card' style='text-align:center; min-height: 140px;'>
-      <div style='font-size:1.8rem; margin-bottom:0.5rem;'>🔮</div>
+      <div style='font-size:1.8rem; margin-bottom:0.5rem;'>⚙️</div>
       <div style='color:#e6edf3; font-weight:600; font-size:0.9rem;'>Predict Failure</div>
       <div style='color:#8b949e; font-size:0.78rem; margin-top:0.3rem;'>Enter sensor data and get instant failure predictions with risk levels</div>
     </div>
@@ -390,22 +390,13 @@ with col_p1:
 with col_p2:
     st.markdown("""
     <div class='info-card' style='text-align:center; min-height: 140px;'>
-      <div style='font-size:1.8rem; margin-bottom:0.5rem;'>📊</div>
-      <div style='color:#e6edf3; font-weight:600; font-size:0.9rem;'>Analytics</div>
-      <div style='color:#8b949e; font-size:0.78rem; margin-top:0.3rem;'>Explore interactive charts, distributions, and failure pattern insights</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col_p3:
-    st.markdown("""
-    <div class='info-card' style='text-align:center; min-height: 140px;'>
       <div style='font-size:1.8rem; margin-bottom:0.5rem;'>🤖</div>
       <div style='color:#e6edf3; font-weight:600; font-size:0.9rem;'>Model Performance</div>
       <div style='color:#8b949e; font-size:0.78rem; margin-top:0.3rem;'>Compare Decision Tree vs Random Forest vs XGBoost side by side</div>
     </div>
     """, unsafe_allow_html=True)
 
-with col_p4:
+with col_p3:
     st.markdown("""
     <div class='info-card' style='text-align:center; min-height: 140px;'>
       <div style='font-size:1.8rem; margin-bottom:0.5rem;'>🔧</div>
