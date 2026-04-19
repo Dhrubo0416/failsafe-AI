@@ -19,8 +19,8 @@ st.markdown("""
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
   html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-  .stApp { background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%); }
-  [data-testid="stSidebar"] { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); border-right: 1px solid #30363d; }
+  .stApp { background: linear-gradient(135deg, #0a0a0a 0%, #171717 50%, #1f1f1f 100%); }
+  [data-testid="stSidebar"] { background: linear-gradient(180deg, #000000 0%, #0f0f0f 100%); border-right: 1px solid #2a2a2a; }
   #MainMenu {visibility: hidden;} footer {visibility: hidden;}
   .risk-critical { background: rgba(248,81,73,0.15); border: 1px solid rgba(248,81,73,0.5); color: #f85149; border-radius: 12px; padding: 1.5rem; text-align: center; }
   .risk-high { background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.5); color: #f5a623; border-radius: 12px; padding: 1.5rem; text-align: center; }
@@ -45,8 +45,8 @@ display_names = config["dataset"]["display_names"]
 # Header
 st.markdown("""
 <div style='padding: 1rem 0;'>
-  <h1 style='background: linear-gradient(135deg, #00d2ff, #3a7bd5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2rem;'>
-    🔮 Predict Equipment Failure
+  <h1 style='background: linear-gradient(135deg, #e0e0e0, #ff4b4b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2rem;'>
+    ⚙️ Predict Equipment Failure
   </h1>
   <p style='color: #8b949e; font-size: 0.9rem;'>
     Enter CNC milling machine sensor readings below to predict failure probability and type
@@ -192,7 +192,7 @@ with col_result:
             number={"suffix": "%", "font": {"size": 36, "color": "#e6edf3"}},
             gauge={
                 "axis": {"range": [0, 100], "tickcolor": "#8b949e", "tickfont": {"color": "#8b949e"}},
-                "bar": {"color": "#00d2ff"},
+                "bar": {"color": "#ff4b4b"},
                 "bgcolor": "rgba(255,255,255,0.05)",
                 "borderwidth": 0,
                 "steps": [
@@ -254,7 +254,7 @@ with col_result:
         <div style='text-align: center; padding: 4rem 2rem;
                     background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);
                     border-radius: 16px; margin-top: 2rem;'>
-          <div style='font-size: 3rem; margin-bottom: 1rem;'>🔮</div>
+          <div style='font-size: 3rem; margin-bottom: 1rem;'>⚙️</div>
           <div style='font-size: 1.1rem; color: #8b949e; font-weight: 500;'>
             Adjust the sensor parameters and click Predict
           </div>

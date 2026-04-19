@@ -20,15 +20,15 @@ st.markdown("""
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
   html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-  .stApp { background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%); }
-  [data-testid="stSidebar"] { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); border-right: 1px solid #30363d; }
+  .stApp { background: linear-gradient(135deg, #0a0a0a 0%, #171717 50%, #1f1f1f 100%); }
+  [data-testid="stSidebar"] { background: linear-gradient(180deg, #000000 0%, #0f0f0f 100%); border-right: 1px solid #2a2a2a; }
   #MainMenu {visibility: hidden;} footer {visibility: hidden;}
-  .winner-badge { display: inline-block; background: rgba(0,210,255,0.15); border: 1px solid rgba(0,210,255,0.4);
-    border-radius: 20px; padding: 0.3rem 0.8rem; font-size: 0.82rem; color: #00d2ff; font-weight: 600; }
+  .winner-badge { display: inline-block; background: rgba(255,75,75,0.15); border: 1px solid rgba(255,75,75,0.4);
+    border-radius: 20px; padding: 0.3rem 0.8rem; font-size: 0.82rem; color: #ff4b4b; font-weight: 600; }
 </style>
 """, unsafe_allow_html=True)
 
-COLORS_3 = {"Decision Tree": "#f5a623", "Random Forest": "#3fb950", "XGBoost": "#00d2ff"}
+COLORS_3 = {"Decision Tree": "#e0e0e0", "Random Forest": "#b71c1c", "XGBoost": "#ff4b4b"}
 
 @st.cache_resource(show_spinner=False)
 def load_metrics():
@@ -44,7 +44,7 @@ model_names = ["Decision Tree", "Random Forest", "XGBoost"]
 
 # Header
 st.markdown(f"""
-<h1 style='background: linear-gradient(135deg, #00d2ff, #3a7bd5); -webkit-background-clip: text;
+<h1 style='background: linear-gradient(135deg, #e0e0e0, #ff4b4b); -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; font-size: 2rem;'>
   🤖 Model Performance Comparison
 </h1>
@@ -60,7 +60,7 @@ cols = st.columns(3)
 for i, name in enumerate(model_names):
     m = metrics[name]
     is_best = (name == best_name)
-    border_color = "rgba(0,210,255,0.6)" if is_best else "rgba(255,255,255,0.08)"
+    border_color = "rgba(255,75,75,0.6)" if is_best else "rgba(255,255,255,0.08)"
     badge = " 🏆" if is_best else ""
 
     with cols[i]:
@@ -197,7 +197,7 @@ with ft_col2:
 
     fig_ft_cm = go.Figure(data=go.Heatmap(
         z=ft_cm, x=short_classes, y=short_classes,
-        colorscale=[[0, "#0d1117"], [1, "#bc8cff"]],
+        colorscale=[[0, "#0d1117"], [1, "#757575"]],
         text=ft_cm, texttemplate="%{text}",
         textfont={"size": 12, "color": "#e6edf3"},
         showscale=False,

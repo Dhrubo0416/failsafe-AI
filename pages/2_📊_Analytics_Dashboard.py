@@ -20,14 +20,14 @@ st.markdown("""
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
   html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-  .stApp { background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%); }
-  [data-testid="stSidebar"] { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); border-right: 1px solid #30363d; }
+  .stApp { background: linear-gradient(135deg, #0a0a0a 0%, #171717 50%, #1f1f1f 100%); }
+  [data-testid="stSidebar"] { background: linear-gradient(180deg, #000000 0%, #0f0f0f 100%); border-right: 1px solid #2a2a2a; }
   #MainMenu {visibility: hidden;} footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
 DARK_TEMPLATE = "plotly_dark"
-COLORS = ["#00d2ff", "#3a7bd5", "#f85149", "#f5a623", "#3fb950", "#bc8cff"]
+COLORS = ["#ff4b4b", "#e0e0e0", "#b71c1c", "#f5a623", "#3fb950", "#757575"]
 
 @st.cache_data(show_spinner=False)
 def load_data():
@@ -43,7 +43,7 @@ df = load_data()
 
 # Header
 st.markdown("""
-<h1 style='background: linear-gradient(135deg, #00d2ff, #3a7bd5); -webkit-background-clip: text;
+<h1 style='background: linear-gradient(135deg, #e0e0e0, #ff4b4b); -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; font-size: 2rem;'>
   📊 Analytics Dashboard
 </h1>
@@ -94,7 +94,7 @@ with col3:
     type_failure["Type Label"] = type_failure["Type"].map({"L": "Low Quality", "M": "Medium Quality", "H": "High Quality"})
 
     fig3 = px.bar(type_failure, x="Type Label", y="Failure Rate (%)",
-                  color="Type Label", color_discrete_sequence=["#3a7bd5", "#f5a623", "#f85149"],
+                  color="Type Label", color_discrete_sequence=["#e0e0e0", "#f5a623", "#ff4b4b"],
                   title="Failure Rate by Machine Type",
                   text="Failure Rate (%)")
     fig3.update_layout(template=DARK_TEMPLATE, paper_bgcolor="rgba(0,0,0,0)",
@@ -137,7 +137,7 @@ fig5 = go.Figure(data=go.Heatmap(
     z=corr.values,
     x=short_labels,
     y=short_labels,
-    colorscale=[[0, "#0d1117"], [0.5, "#3a7bd5"], [1, "#00d2ff"]],
+    colorscale=[[0, "#0d1117"], [0.5, "#b71c1c"], [1, "#ff4b4b"]],
     text=np.round(corr.values, 2),
     texttemplate="%{text}",
     textfont={"size": 11},

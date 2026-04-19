@@ -19,8 +19,8 @@ st.markdown("""
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
   html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-  .stApp { background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%); }
-  [data-testid="stSidebar"] { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); border-right: 1px solid #30363d; }
+  .stApp { background: linear-gradient(135deg, #0a0a0a 0%, #171717 50%, #1f1f1f 100%); }
+  [data-testid="stSidebar"] { background: linear-gradient(180deg, #000000 0%, #0f0f0f 100%); border-right: 1px solid #2a2a2a; }
   #MainMenu {visibility: hidden;} footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
@@ -55,7 +55,7 @@ def predict_single(type_val, air_temp, proc_temp, rot_speed, torque, tool_wear):
 
 # Header
 st.markdown("""
-<h1 style='background: linear-gradient(135deg, #00d2ff, #3a7bd5); -webkit-background-clip: text;
+<h1 style='background: linear-gradient(135deg, #e0e0e0, #ff4b4b); -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; font-size: 2rem;'>
   🔧 What-If Analysis
 </h1>
@@ -153,7 +153,7 @@ for idx, (title, (param_name, values)) in enumerate(params.items()):
 
     fig_sens.add_trace(go.Scatter(
         x=values, y=probs, mode="lines",
-        line=dict(color="#00d2ff", width=2.5),
+        line=dict(color="#ff4b4b", width=2.5),
         showlegend=False,
     ), row=row, col=col)
 

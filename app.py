@@ -42,17 +42,17 @@ st.markdown("""
   }
 
   .stApp {
-    background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+    background: linear-gradient(135deg, #0a0a0a 0%, #171717 50%, #1f1f1f 100%);
     min-height: 100vh;
   }
 
   [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
-    border-right: 1px solid #30363d;
+    background: linear-gradient(180deg, #000000 0%, #0f0f0f 100%);
+    border-right: 1px solid #2a2a2a;
   }
 
   .gradient-title {
-    background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 50%, #00d2ff 100%);
+    background: linear-gradient(135deg, #e0e0e0 0%, #ff4b4b 50%, #e0e0e0 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -70,22 +70,22 @@ st.markdown("""
   }
 
   .metric-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(0,210,255,0.2);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(224,224,224,0.15);
     border-radius: 12px;
     padding: 1rem 1.2rem;
     text-align: center;
     transition: all 0.3s ease;
   }
   .metric-card:hover {
-    border-color: rgba(0,210,255,0.5);
+    border-color: rgba(255,75,75,0.6);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,210,255,0.15);
+    box-shadow: 0 8px 24px rgba(255,75,75,0.15);
   }
   .metric-value {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #00d2ff;
+    color: #ff4b4b;
   }
   .metric-label {
     font-size: 0.8rem;
@@ -96,13 +96,13 @@ st.markdown("""
   }
 
   .sidebar-section {
-    color: #00d2ff;
+    color: #e0e0e0;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin: 1rem 0 0.5rem 0;
-    border-bottom: 1px solid rgba(0,210,255,0.3);
+    border-bottom: 1px solid rgba(224,224,224,0.2);
     padding-bottom: 0.25rem;
   }
 
@@ -228,9 +228,9 @@ except Exception as e:
 with st.sidebar:
     st.markdown("""
     <div style='text-align: center; padding: 1rem 0;'>
-      <div style='font-size: 2.5rem;'>🔧</div>
-      <div style='font-size: 1.1rem; font-weight: 700; color: #00d2ff;'>FailSafe AI</div>
-      <div style='font-size: 0.75rem; color: #8b949e; margin-top: 0.25rem;'>Predictive Maintenance Platform</div>
+      <div style='font-size: 2.5rem;'>⚙️</div>
+      <div style='font-size: 1.1rem; font-weight: 700; color: #ff4b4b;'>FailSafe AI</div>
+      <div style='font-size: 0.75rem; color: #a0a0a0; margin-top: 0.25rem;'>Predictive Maintenance Platform</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -245,7 +245,7 @@ with st.sidebar:
     st.markdown("<div class='sidebar-section'>About</div>", unsafe_allow_html=True)
     st.markdown("""
     <div style='font-size:0.82rem; color:#8b949e; line-height:1.7;'>
-    FailSafe AI uses <b style='color:#00d2ff;'>machine learning</b> to predict
+    FailSafe AI uses <b style='color:#e0e0e0;'>machine learning</b> to predict
     equipment failures in CNC milling machines <b>before they happen</b>,
     analyzing 6 sensor parameters + 3 engineered features.
     </div>
@@ -256,11 +256,11 @@ with st.sidebar:
     st.markdown("<div class='sidebar-section'>Tech Stack</div>", unsafe_allow_html=True)
     st.markdown("""
     <div style='font-size:0.8rem; color:#8b949e; line-height:1.8;'>
-      🤖 <b style='color:#00d2ff;'>XGBoost + RF</b> -- ML Models<br>
-      📊 <b style='color:#00d2ff;'>Plotly</b> -- Visualizations<br>
-      🔬 <b style='color:#00d2ff;'>SMOTE</b> -- Class Balancing<br>
-      🎈 <b style='color:#00d2ff;'>Streamlit</b> -- Frontend<br>
-      📦 <b style='color:#00d2ff;'>scikit-learn</b> -- ML Pipeline<br>
+      🤖 <b style='color:#ff4b4b;'>XGBoost + RF</b> -- ML Models<br>
+      📊 <b style='color:#e0e0e0;'>Plotly</b> -- Visualizations<br>
+      🔬 <b style='color:#ff4b4b;'>SMOTE</b> -- Class Balancing<br>
+      🎈 <b style='color:#e0e0e0;'>Streamlit</b> -- Frontend<br>
+      📦 <b style='color:#ff4b4b;'>scikit-learn</b> -- ML Pipeline<br>
     </div>
     """, unsafe_allow_html=True)
 
@@ -269,7 +269,7 @@ with st.sidebar:
     st.markdown("<div class='sidebar-section'>Dataset</div>", unsafe_allow_html=True)
     st.markdown("""
     <div style='font-size:0.8rem; color:#8b949e; line-height:1.7;'>
-    <b style='color:#00d2ff;'>AI4I 2020</b> Predictive Maintenance Dataset<br>
+    <b style='color:#e0e0e0;'>AI4I 2020</b> Predictive Maintenance Dataset<br>
     UCI Machine Learning Repository<br>
     10,000 data points | 5 failure modes
     </div>
@@ -342,10 +342,10 @@ col_a, col_b = st.columns(2)
 with col_a:
     st.markdown("""
     <div class='info-card'>
-      <h4 style='color:#00d2ff; margin-top:0;'>🏭 The Problem</h4>
+      <h4 style='color:#e0e0e0; margin-top:0;'>🏭 The Problem</h4>
       <p style='color:#8b949e; font-size:0.88rem; line-height:1.6;'>
         Unplanned equipment failures cost the manufacturing industry
-        <b style='color:#f85149;'>$50 billion annually</b>. A single hour of
+        <b style='color:#ff4b4b;'>$50 billion annually</b>. A single hour of
         downtime on a CNC milling machine costs $10,000-$50,000. Traditional
         reactive maintenance is too late; preventive maintenance on fixed schedules
         is wasteful.
@@ -356,11 +356,11 @@ with col_a:
 with col_b:
     st.markdown("""
     <div class='info-card'>
-      <h4 style='color:#00d2ff; margin-top:0;'>🔮 The Solution</h4>
+      <h4 style='color:#e0e0e0; margin-top:0;'>⚙️ The Solution</h4>
       <p style='color:#8b949e; font-size:0.88rem; line-height:1.6;'>
-        FailSafe AI uses <b style='color:#3fb950;'>real-time sensor data</b> --
+        FailSafe AI uses <b style='color:#e0e0e0;'>real-time sensor data</b> --
         temperature, speed, torque, tool wear -- to predict failures
-        <b style='color:#3fb950;'>before they happen</b>. It identifies the
+        <b style='color:#ff4b4b;'>before they happen</b>. It identifies the
         <b>specific failure type</b> (Heat, Power, Overstrain, Tool Wear, Random),
         enabling targeted preventive action.
       </p>
@@ -419,6 +419,6 @@ st.divider()
 st.markdown("""
 <div style='text-align: center; color: #484f58; font-size: 0.78rem; padding: 0.5rem 0;'>
   FailSafe AI &nbsp;|&nbsp; Built by Dhrubo &nbsp;|&nbsp; Powered by XGBoost + scikit-learn + Streamlit
-  &nbsp;|&nbsp; <a href='https://github.com/Dhrubo0416/failsafe-AI' style='color: #00d2ff; text-decoration: none;'>GitHub</a>
+  &nbsp;|&nbsp; <a href='https://github.com/Dhrubo0416/failsafe-AI' style='color: #ff4b4b; text-decoration: none;'>GitHub</a>
 </div>
 """, unsafe_allow_html=True)
