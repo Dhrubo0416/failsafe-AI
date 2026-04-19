@@ -61,41 +61,43 @@ st.markdown(f"""
 
   /* COMPACT FONT INCREASES */
   .enterprise-header .title {{
-    font-size: 1.8rem !important; /* Increased from 1.4 */
+    font-size: 2.2rem !important; /* Increased significantly */
     font-weight: 800;
     color: #ffffff;
     letter-spacing: -0.5px;
+    line-height: 1.3;
+    padding-bottom: 0.2rem;
   }}
   .enterprise-header .subtitle {{
-    font-size: 1rem !important; /* Increased from 0.82 */
+    font-size: 1.15rem !important; /* Increased */
     color: #e0e0e0;
-    margin-top: 0.1rem;
+    margin-top: 0.2rem;
   }}
 
   /* ULTRA-COMPACT UI ELEMENTS */
   [data-testid="stSlider"] {{
-    margin-bottom: -18px !important; /* Even more compact */
+    margin-bottom: -10px !important; /* Better vertical flow */
   }}
   [data-testid="stSlider"] label {{
-    font-size: 0.95rem !important; /* Increased font */
+    font-size: 1.15rem !important; /* Increased font */
     font-weight: 600 !important;
     color: #ffffff !important;
-    margin-bottom: -2px !important;
+    margin-bottom: 2px !important;
   }}
 
   .stSelectbox label {{
-    font-size: 0.95rem !important;
+    font-size: 1.15rem !important;
     font-weight: 600 !important;
   }}
 
   .section-label {{
-    font-size: 0.8rem !important;
+    font-size: 1rem !important;
     font-weight: 700;
     color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.2rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.3rem;
     border-bottom: 2px solid #ff4b4b;
     display: inline-block;
   }}
@@ -208,28 +210,28 @@ with col_result:
 
         st.markdown(f"""
         <div class='{r_c}'>
-          <div style='font-size: 1.2rem; font-weight: 800;'>{r_i} {r_l} RISK DETECTED</div>
-          <div style='font-size: 0.85rem; opacity: 0.9;'>Failure Probability: {prob:.1%}</div>
+          <div style='font-size: 1.5rem; font-weight: 800;'>{r_i} {r_l} RISK DETECTED</div>
+          <div style='font-size: 1rem; opacity: 0.9;'>Failure Probability: {prob:.1%}</div>
         </div>
         """, unsafe_allow_html=True)
 
-        st.markdown("<div style='height:0.3rem;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
 
         r1, r2 = st.columns(2)
         with r1:
-            st.markdown(f"""<div class='result-card'><div style='font-size:0.6rem; color:#8b949e;'>STATUS</div>
-            <div style='font-size:0.95rem; font-weight:700; color:{"#f85149" if pred==1 else "#3fb950"};'>{"FAILURE" if pred==1 else "NORMAL"}</div></div>""", 
+            st.markdown(f"""<div class='result-card'><div style='font-size:0.75rem; color:#8b949e;'>STATUS</div>
+            <div style='font-size:1.2rem; font-weight:800; color:{"#f85149" if pred==1 else "#3fb950"};'>{"FAILURE" if pred==1 else "NORMAL"}</div></div>""", 
             unsafe_allow_html=True)
         with r2:
-            st.markdown(f"""<div class='result-card'><div style='font-size:0.6rem; color:#8b949e;'>TYPE</div>
-            <div style='font-size:0.95rem; font-weight:700; color:{"#f85149" if ft_pred!="No Failure" else "#3fb950"};'>{ft_pred}</div></div>""", 
+            st.markdown(f"""<div class='result-card'><div style='font-size:0.75rem; color:#8b949e;'>TYPE</div>
+            <div style='font-size:1.2rem; font-weight:800; color:{"#f85149" if ft_pred!="No Failure" else "#3fb950"};'>{ft_pred}</div></div>""", 
             unsafe_allow_html=True)
 
-        # Compact Gauge
+        # Better Sized Gauge
         fig_g = go.Figure(go.Indicator(
             mode="gauge+number",
             value=prob * 100,
-            number={"suffix": "%", "font": {"size": 24, "color": "#ffffff"}},
+            number={"suffix": "%", "font": {"size": 32, "color": "#ffffff"}},
             gauge={
                 "axis": {"range": [0, 100], "tickcolor": "#8b949e", "tickfont": {"size": 8}},
                 "bar": {"color": "#ff4b4b"},
@@ -258,9 +260,9 @@ with col_result:
         txt, clr = recs.get(ft_pred, ("Consult logs.", "#8b949e"))
         st.markdown(f"""
         <div style='background: rgba(10, 10, 10, 0.6); border-left: 4px solid {clr};
-                    border-radius: 0 8px 8px 0; padding: 0.6rem 0.8rem;'>
-          <div style='font-size: 0.6rem; color: #8b949e; text-transform: uppercase; margin-bottom: 0.1rem;'>RECOMMENDATION</div>
-          <div style='color: #ffffff; font-size: 0.82rem; line-height: 1.3;'>{txt}</div>
+                    border-radius: 0 8px 8px 0; padding: 0.8rem 1rem;'>
+          <div style='font-size: 0.75rem; color: #8b949e; text-transform: uppercase; margin-bottom: 0.2rem;'>RECOMMENDATION</div>
+          <div style='color: #ffffff; font-size: 1.05rem; line-height: 1.4;'>{txt}</div>
         </div>
         """, unsafe_allow_html=True)
 

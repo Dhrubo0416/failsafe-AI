@@ -46,7 +46,7 @@ st.markdown(f"""
   [data-testid="stMain"] > div {{ position: relative; z-index: 1; }}
 
   .enterprise-header {{ display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 0.8rem; }}
-  .enterprise-header .title {{ font-size: 1.8rem !important; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; }}
+  .enterprise-header .title {{ font-size: 1.8rem !important; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; line-height: 1.3; padding-bottom: 0.2rem; }}
   .enterprise-header .subtitle {{ font-size: 1rem !important; color: #e0e0e0; }}
   .enterprise-header .icon {{ width: 40px; height: 40px; background: linear-gradient(135deg, #ff4b4b, #b71c1c); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }}
 
