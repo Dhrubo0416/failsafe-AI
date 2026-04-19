@@ -48,7 +48,7 @@ st.markdown(f"""
   .enterprise-header {{ display: flex; align-items: center; gap: 0.75rem; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 0.8rem; }}
   .enterprise-header .title {{ font-size: 1.8rem !important; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; line-height: 1.4; padding-top: 0.5rem; padding-bottom: 0.5rem; }}
   .enterprise-header .subtitle {{ font-size: 1rem !important; color: #e0e0e0; }}
-  .enterprise-header .icon {{ width: 40px; height: 40px; background: linear-gradient(135deg, #ff4b4b, #b71c1c); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }}
+  .enterprise-header .icon {{ width: 55px; height: 55px; background: linear-gradient(135deg, #ff4b4b, #b71c1c); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }}
 
   .section-label {{ font-size: 0.75rem !important; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.4rem; padding-bottom: 0.2rem; border-bottom: 2px solid #ff4b4b; display: inline-block; }}
   
@@ -87,7 +87,7 @@ def predict_single(type_val, air_temp, proc_temp, rot_speed, torque, tool_wear):
 # Enterprise Header
 st.markdown(f"""
 <div class='enterprise-header'>
-  <div class='icon'>🛡️</div>
+  <div class='icon'>🧪</div>
   <div>
     <div class='title'>What-If Simulation Lab</div>
     <div class='subtitle'>Stress-test physical thresholds and calibrate safety margins with real-time feedback</div>

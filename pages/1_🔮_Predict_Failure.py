@@ -59,6 +59,24 @@ st.markdown(f"""
     z-index: 1;
   }}
 
+  /* HEADER FLEX CONTAINERS */
+  .enterprise-header {{
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 1.5rem;
+  }}
+  .enterprise-header .icon {{
+    width: 55px; height: 55px;
+    background: linear-gradient(135deg, #ff4b4b, #b71c1c);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }}
+
   /* COMPACT FONT INCREASES */
   .enterprise-header .title {{
     font-size: 2.2rem !important; 
@@ -148,7 +166,7 @@ best_model, ft_model, ft_metrics, config = load_models()
 # Enterprise Header
 st.markdown("""
 <div class='enterprise-header'>
-  <div class='icon'>🛡️</div>
+  <div class='icon'>⚙️</div>
   <div>
     <div class='title'>Failure Prediction Engine</div>
     <div class='subtitle'>High-Fidelity Machine Hardware Lifecycle Diagnostics</div>
