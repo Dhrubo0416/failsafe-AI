@@ -5,7 +5,7 @@
 ![XGBoost](https://img.shields.io/badge/XGBoost-2.1.4-blue?style=for-the-badge)
 ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.6.1-F7931E?style=for-the-badge&logo=scikit-learn)
 
-**FailSafe AI** is an advanced machine learning platform designed to predict equipment failures in CNC milling machines **before they happen**. By transitioning from reactive maintenance to predictive maintenance, manufacturing plants can reduce unplanned downtime by up to 20% and optimize operational efficiency (OEE).
+**FailSafe AI** is an advanced machine learning platform designed to predict equipment failures in CNC milling machines **before they happen**. By transitioning from reactive maintenance to predictive maintenance, manufacturing plants can reduce unplanned downtime by up to 70% and optimize operational efficiency (OEE).
 
 ## 🚀 Live Demo
 Access the live application deployed on Streamlit Community Cloud: **[FailSafe AI Live Demo](https://failsafe-ai-amhhbjkacjg4r86i55godh.streamlit.app/)**
